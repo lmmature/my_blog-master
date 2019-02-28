@@ -1,0 +1,95 @@
+{% extends "show/base.html" %}
+
+{% block title %}联系我{% endblock %}
+{% block class %}
+    sub-page
+{% endblock %}
+{% block content %}
+    {% include 'show/header.html' %}
+    <header class="container">
+        <div class="site-branding">
+            <h1 class="site-title">
+                <a href="index.html">
+                    <span>LMH</span>
+                </a>
+            </h1>
+            <h2 class="site-description">Welcome to me !</h2>
+        </div>
+        <div class="social-links">
+            <ul class="list-inline">
+                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- /////////////////////////////////////////Content -->
+    <div id="page-content" class="single-page">
+    <div class="container">
+    <div class="row">
+    <div id="main-content">
+    <article>
+        <div class="art-content">
+            <div class="row">
+                <div class="col-md-4 box-item">
+                    <h3>联系信息</h3>
+                    <span>欢迎提出您的疑问和您的宝贵建议.</span><br> <br>
+                    <p>QQ:1043213248</p>
+                </div>
+                <div class="col-md-8">
+                    <h3>Contact Form</h3>
+                    <form name="form1" method="post" action="">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" name="name" id="name"
+                                           placeholder="你的姓名" required="required"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="email" class="form-control input-lg" name="email" id="email"
+                                           placeholder="Email" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" name="subject" id="subject"
+                                           placeholder="主题" required="required"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+													<textarea name="message" id="message" class="form-control" rows="4"
+                                                              cols="25" required="required"
+                                                              placeholder="想对我说" style="height: 190px;"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-skin btn-block" name="submitcontact"
+                                        id="submitcontact">发送
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </article>
+    <!-- FOOTER -->
+    {% if send %}
+        <script>
+            alert("我已经收到您的来信,感谢您的支持");
+        </script>
+    {% endif %}
+    {% if failed %}
+        <script>
+            alert("发送失败");
+        </script>
+    {% endif %}
+{% endblock %}
+
+

@@ -1,0 +1,461 @@
+{% extends "backstage/base.html" %}
+{% block title %}编辑文章{% endblock %}
+{% block content %}
+    {% if  flag %}
+        <link rel="stylesheet" href="/static/assets/js/vendor/summernote/css/summernote.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/summernote/css/summernote-bs3.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/datepicker/css/bootstrap-datetimepicker.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/colorpicker/css/bootstrap-colorpicker.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/colorpalette/bootstrap-colorpalette.css">
+
+        <div class="mask">
+            <div id="loader"></div>
+        </div>
+        <!--/Preloader -->
+        <!-- Wrap all page content here -->
+        <div id="wrap">
+        <!-- Make page fluid -->
+        <div class="row">
+        <!-- Page content -->
+        <div id="content" class="col-md-12">
+        <!-- page header -->
+        <div class="pageheader">
+            <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i>文章编辑<span>精益求精</span></h2>
+            <!-- /page header -->
+            <!-- content main container -->
+            <div class="main">
+                <!-- row -->
+                <div class="row">
+                    <!-- col 12 -->
+                    <div class="col-md-12">
+                        <!-- tile -->
+                        <section class="tile color transparent-black">
+                            <!-- tile header -->
+                            <div class="tile-header">
+                                <h1><strong>精益</strong>求精</h1>
+                                <div class="controls">
+                                    <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                    <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+                            <!-- /tile header -->
+                            <!-- tile body -->
+                            <div class="tile-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="type" class="col-sm-1 control-label">类别</label>
+                                        <div class="col-sm-8">
+                                            <select data-placeholder=""
+                                                    class="chosen-select form-control chosen-transparent" id="type">
+                                                <option value="{{ type }}">{{ type }}</option>
+                                                {% for var in types %}
+                                                    {% if var.type != type %}
+                                                        <option value="{{ var.type }}">{{ var.type }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="article_title" class="col-sm-1 control-label">文章标题</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" value="{{ title.title }}"
+                                                   id="article_title">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datepicker" class="col-sm-1 control-label">编辑时间</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" value="{{ title.time }}"
+                                                   id="datepicker">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description" class="col-sm-1 control-label">内容简介</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" id="description" rows="6"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group transparent-editor">
+                                        <label class="col-sm-1 control-label" for="article_content">文章内容</label>
+                                        <div class="col-sm-10">
+                                            <div class="form-control summernote" id="article_content"></div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" onclick="put()">submit</button>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                </section>
+            </div>
+            <!-- Make page fluid-->
+        </div>
+        <!-- Wrap all page content end -->
+        <section class="videocontent" id="video"></section>
+        <!--add页面js文件-->
+        <script src="/static/assets/js/vendor/summernote/summernote.min.js"></script>
+        <script src="/static/assets/js/vendor/momentjs/moment-with-langs.min.js"></script>
+        <script src="/static/assets/js/vendor/datepicker/bootstrap-datetimepicker.min.js"></script>
+        <script src="/static/assets/js/vendor/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="/static/assets/js/vendor/colorpalette/bootstrap-colorpalette.js"></script>
+
+        <!--add页面js文件-->
+        <script>
+            $(document).ready(function () {
+                {#str = str.replace(/.br.{2}/g,'\n');#}
+                document.getElementById('description').value = "{{title.description|safe}}";
+            });
+
+            function put() {
+                var type = document.getElementById('type').value;
+                var title = document.getElementById('article_title').value;
+                var time = document.getElementById('datepicker').value;
+                var description = document.getElementById('description').value;
+                var content = $('#article_content').code();
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {
+                        "type": type,
+                        "title": title,
+                        "time": time,
+                        "description": description,
+                        "content": content,
+                        "md": ""
+                    },
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function (result) {
+                        alert("提交失败");
+                    }
+                })
+            }
+
+            $(function () {
+                //load wysiwyg editor
+                $('.summernote').summernote({
+                    toolbar: [
+                        //['style', ['style']], // no style button
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontsize', ['fontsize']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']],
+                        ['insert', ['picture', 'link']]
+                    ],
+                    height: 500   //set editable area's height
+                });
+
+                $('#article_content').code("{{content|safe}}");
+                //chosen select input
+                $(".chosen-select").chosen({disable_search_threshold: 10});
+
+                //initialize datepicker
+                $('#datepicker').datetimepicker({
+                    icons: {
+                        time: "fa fa-clock-o",
+                        date: "fa fa-calendar",
+                        up: "fa fa-arrow-up",
+                        down: "fa fa-arrow-down"
+                    }
+                });
+
+                $("#datepicker").on("dp.show", function (e) {
+                    var newtop = $('.bootstrap-datetimepicker-widget').position().top - 45;
+                    $('.bootstrap-datetimepicker-widget').css('top', newtop + 'px');
+                });
+
+                //initialize colorpicker
+                $('#colorpicker').colorpicker();
+
+                $('#colorpicker').colorpicker().on('showPicker', function (e) {
+                    var newtop = $('.dropdown-menu.colorpicker.colorpicker-visible').position().top - 45;
+                    $('.dropdown-menu.colorpicker.colorpicker-visible').css('top', newtop + 'px');
+                });
+
+                //initialize colorpicker RGB
+                $('#colorpicker-rgb').colorpicker({
+                    format: 'rgb'
+                });
+
+                $('#colorpicker-rgb').colorpicker().on('showPicker', function (e) {
+                    var newtop = $('.dropdown-menu.colorpicker.colorpicker-visible').position().top - 45;
+                    $('.dropdown-menu.colorpicker.colorpicker-visible').css('top', newtop + 'px');
+                });
+
+                // Initialize colorpalette
+                $('#event-colorpalette').colorPalette({
+                    colors: [['#428bca', '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f', '#ff4a43', '#22beef', '#a2d200', '#ffc100', '#cd97eb', '#16a085', '#FF0066', '#A40778', '#1693A5']]
+                }).on('selectColor', function (e) {
+                    var data = $(this).data();
+
+                    $(data.returnColor).val(e.color);
+                    $(this).parents(".input-group").css("border-bottom-color", e.color);
+                });
+
+            })
+        </script>
+    {% else %}
+        <link rel="stylesheet" href="/static/assets/js/vendor/summernote/css/summernote.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/summernote/css/summernote-bs3.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/datepicker/css/bootstrap-datetimepicker.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/colorpicker/css/bootstrap-colorpicker.css">
+        <link rel="stylesheet" href="/static/assets/js/vendor/colorpalette/bootstrap-colorpalette.css">
+        <link rel="stylesheet" href="/static/md/editormd.min.css"/>
+        <script src="/static/js/jquery.min.js"></script>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css"/>
+
+
+        <!--/Preloader -->
+        <!-- Wrap all page content here -->
+        <div id="wrap">
+            <!-- Make page fluid -->
+            <div class="row">
+                <!-- Page content -->
+                <div id="content" class="col-md-12">
+                    <!-- page header -->
+                    <div class="pageheader">
+                        <h2><i class="fa fa-thumb-tack" style="line-height: 48px;padding-left: 1px;"></i>新增文章<span>写下你的所思，所想，所感</span>
+                        </h2>
+                        <!-- /page header -->
+                        <!-- content main container -->
+                        <div class="main">
+                            <!-- row -->
+                            <div class="row">
+                                <!-- col 12 -->
+                                <div class="col-md-12">
+                                    <!-- tile -->
+                                    <section class="tile color transparent-black">
+                                        <!-- tile header -->
+                                        <div class="tile-header">
+                                            <h1><strong>奋笔</strong>疾书</h1>
+                                            <div class="controls">
+                                                <a href="#" class="refresh"><i class="fa fa-refresh"></i></a>
+                                                <a href="#" class="remove"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                        <!-- /tile header -->
+                                        <!-- tile body -->
+                                        <div class="tile-body">
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label for="type" class="col-sm-1 control-label">类别</label>
+                                                    <div class="col-sm-8">
+                                                        <select data-placeholder="选择类型"
+                                                                class="chosen-select form-control chosen-transparent"
+                                                                id="type">
+                                                            <option value="{{ type }}">{{ type }}</option>
+                                                            {% for var in types %}
+                                                                {% if var.type != type %}
+                                                                    <option value="{{ var.type }}">{{ var.type }}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="article_title"
+                                                           class="col-sm-1 control-label">文章标题</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control"
+                                                               value="{{ title.title }}" id="article_title">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="datepicker" class="col-sm-1 control-label">编辑时间</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" id="datepicker"
+                                                               value="{{ title.time }}">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="description" class="col-sm-1 control-label">内容简介</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control" id="description"
+                                                                  rows="6"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group transparent-editor">
+                                                    <label class="col-sm-1 control-label"
+                                                           for="article_content">文章内容</label>
+                                                    <div class="col-sm-10">
+                                                        <div id="editormd">
+                                                            <textarea style="display:none"
+                                                                      id='markdown_text'>{{ content|safe }}</textarea>
+                                                            <div>
+                                                            </div>
+                                                        </div>
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                                                onclick="get_text()">提交
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                    </section>
+                                </div>
+                            </div>
+                            </section>
+                        </div>
+                        <!-- Make page fluid-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Wrap all page content end -->
+        <!--add页面js文件-->
+        <script src="/static/assets/js/vendor/summernote/summernote.min.js"></script>
+        <script src="/static/assets/js/vendor/momentjs/moment-with-langs.min.js"></script>
+        <script src="/static/assets/js/vendor/datepicker/bootstrap-datetimepicker.min.js"></script>
+        <script src="/static/assets/js/vendor/colorpicker/bootstrap-colorpicker.min.js"></script>
+        <script src="/static/assets/js/vendor/colorpalette/bootstrap-colorpalette.js"></script>
+        <script src="/static/md/editormd.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <!--add页面js文件-->
+        <script>
+            {#function put() {#}
+            {#    var type = document.getElementById('type').value;#}
+            {#    var title = document.getElementById('article_title').value;#}
+            {#    var time = document.getElementById('datepicker').value;#}
+            {#    var description = document.getElementById('description').value;#}
+            {#    var content = $('#article_content').code();#}
+            {#    {{ CRSF_Token }} //跨站#}
+            {#    $.ajax({#}
+            {#        url: "",#}
+            {#        type: "POST",#}
+            {#        data: {"type": type, "title": title, "time": time, "description": description, "content": content},#}
+            {#        success: function (result) {#}
+            {#            alert(result);#}
+            {#        },#}
+            {#        error: function () {#}
+            {#            alert("提交失败");#}
+            {#        }#}
+            {#    })#}
+            {#}#}
+
+                $(function () {
+                    //chosen select input
+                    $(".chosen-select").chosen({disable_search_threshold: 10});
+
+                    //initialize datepicker
+                    $('#datepicker').datetimepicker({
+                        icons: {
+                            time: "fa fa-clock-o",
+                            date: "fa fa-calendar",
+                            up: "fa fa-arrow-up",
+                            down: "fa fa-arrow-down"
+                        }
+                    });
+
+                    $("#datepicker").on("dp.show", function (e) {
+                        var newtop = $('.bootstrap-datetimepicker-widget').position().top - 45;
+                        $('.bootstrap-datetimepicker-widget').css('top', newtop + 'px');
+                    });
+
+                    //initialize colorpicker
+                    $('#colorpicker').colorpicker();
+
+                    $('#colorpicker').colorpicker().on('showPicker', function (e) {
+                        var newtop = $('.dropdown-menu.colorpicker.colorpicker-visible').position().top - 45;
+                        $('.dropdown-menu.colorpicker.colorpicker-visible').css('top', newtop + 'px');
+                    });
+
+                    //initialize colorpicker RGB
+                    $('#colorpicker-rgb').colorpicker({
+                        format: 'rgb'
+                    });
+
+                    $('#colorpicker-rgb').colorpicker().on('showPicker', function (e) {
+                        var newtop = $('.dropdown-menu.colorpicker.colorpicker-visible').position().top - 45;
+                        $('.dropdown-menu.colorpicker.colorpicker-visible').css('top', newtop + 'px');
+                    });
+
+                    // Initialize colorpalette
+                    $('#event-colorpalette').colorPalette({
+                        colors: [['#428bca', '#5cb85c', '#5bc0de', '#f0ad4e', '#d9534f', '#ff4a43', '#22beef', '#a2d200', '#ffc100', '#cd97eb', '#16a085', '#FF0066', '#A40778', '#1693A5']]
+                    }).on('selectColor', function (e) {
+                        var data = $(this).data();
+
+                        $(data.returnColor).val(e.color);
+                        $(this).parents(".input-group").css("border-bottom-color", e.color);
+                    });
+
+                })
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                {#str = str.replace(/.br.{2}/g,'\n');#}
+                document.getElementById('description').value = "{{title.description|safe}}";
+            });
+            $(function () {
+                var editor = editormd("editormd", {
+                    path: "/static/md/lib/",// Autoload modules mode, codemirror, marked... dependents libs path
+                    width: "100%",
+                    height: "700",
+                    syncScrolling: "single",
+                    saveHTMLToTextarea: true,
+                    emoji: "true",
+                    imageUpload: true,
+                    imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+                    imageUploadURL: "{% url "upload" %}",//注意你后端的上传图片服务地址
+                    taskList: true,
+                    tocm: true, // Using [TOCM]
+                    tex: true,// 開啟科學公式TeX語言支持，默認關閉
+                    flowChart: true,//開啟流程圖支持，默認關閉
+                    sequenceDiagram: true,//開啟時序/串行圖支持，默認關閉,
+                    sequenceDiagram: true,//開啟時序/串行圖支持，默認關閉,
+                    dialogLockScreen: false,//設置彈出層對話框不鎖屏，全局通用，默認為true
+                    dialogShowMask: false,//設置彈出層對話框顯示透明遮罩層，全局通用，默認為true
+                    dialogDraggable: false,//設置彈出層對話框不可拖動，全局通用，默認為true
+                    dialogMaskOpacity: 0.4, //設置透明遮罩層的透明度，全局通用，默認值為0.1
+                    dialogMaskBgColor: "#fff",//設置透明遮罩層的背景顏色，全局通用，默認為#fff
+                    codeFold: true,
+                    /*上傳圖片成功後可以做一些自己的處理*/
+                    // onload: function () {
+                    //     //console.log('onload', this);
+                    //     //this.fullscreen();
+                    //     //this.unwatch();
+                    //     //this.watch().fullscreen();
+                    //     //this.width("100%");
+                    //     //this.height(480);
+                    //     //this.resize("100%", 640);
+                    // },
+                    /**設置主題顏色*/
+                    editorTheme: "pastel-on-dark",
+                    theme: "gray",
+                    previewTheme: "dark"
+                });
+            });
+
+            function get_text() {
+                var type = document.getElementById('type').value;
+                var title = document.getElementById('article_title').value;
+                var time = document.getElementById('datepicker').value;
+                var description = document.getElementById('description').value;
+                var get_md = document.getElementById('markdown_text').innerText;
+                var get_html = document.getElementsByClassName("markdown-body editormd-preview-container")[0].innerHTML;
+                $.ajax({
+                    url: "",
+                    type: "POST",
+                    data: {
+                        "type": type,
+                        "title": title,
+                        "time": time,
+                        "description": description,
+                        "content": get_html,
+                        "md": get_md
+                    },
+                    success: function (result) {
+                        alert(result);
+                    },
+                    error: function () {
+                        alert("提交失败");
+                    }
+                })
+
+            }
+        </script>
+    {% endif %}
+{% endblock %}

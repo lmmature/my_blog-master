@@ -1,0 +1,74 @@
+<!-- FOOTER -->
+<footer>
+    <div class="wrap-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-footer col-md-4 widget_recent_entries">
+                    <h2 class="footer-title">最近更新</h2>
+                    <ul>
+                        {% for var in latest %}
+                            <li><a href="{% url 'single_paper_show' var.id %}">{{ var.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-footer col-md-4">
+                    <h2 class="footer-title">新文推送</h2>
+                    如果您想第一时间看到我最新的东西，请将您的邮箱留下，我将会以邮件形式告知。
+                    <input type="email" name="reader-email" id="reader-email" value="" size="40"
+                           placeholder="Your Email"/>
+                    <input type="submit" onclick="submit()" value="Bui" class="btn btn-skin"/>
+                </div>
+                <div class="col-footer col-md-4">
+                    <h2 class="footer-title">标签</h2>
+                    <div class="footer-tags">
+                        {% for var in label %}
+                            <a href="{% url 'blogs' var.type %}">{{ var.type }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Copyright@龙妙浩<a href="#" target="_blank" title="龙妙浩">&&made by myself</a></p>
+                </div>
+                <div class="col-md-12">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <ul class="list-inline quicklinks">
+                        <li><a href="#">Privacy Policy</a>
+                        </li>
+                        <li><a href="#">内容未经授权，不得转载</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    function submit() {
+        var email = document.getElementById("reader-email").value;
+        $.ajax({
+            url: "{% url "show_index" %}",
+            type: "POST",
+            data: {'reader-email': email, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            success: function (result) {
+                alert(result);
+            },
+            error: function () {
+                alert("提交失败");
+            }
+        })
+    }
+</script>
+  
+

@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- META DATA -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content="Free Bootstrap Themes by HTML5XCSS3 dot com - Free Responsive Html5 Templates">
+    <meta name="author" content="#">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+
+    <!-- Owl Carousel Assets -->
+    <link href="/static/owl-carousel/owl.carousel.css" rel="stylesheet">
+    <!-- <link href="owl-carousel/owl.theme.css" rel="stylesheet"> -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/static/font-awesome-4.4.0/css/font-awesome.min.css" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Asap:400,700' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+
+{% include "show/header.html" %}
+
+{% block content %}
+{% endblock %}
+
+{% include "show/footer.html" %}
+
+</body>
+<!-- jQuery -->
+<script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="/static/js/agency.js"></script>
+<!-- Plugin JavaScript -->
+<script src="/static/js/jquery.easing.min.js"></script>
+<script src="/static/js/classie.js"></script>
+<script src="/static/js/cbpAnimatedHeader.js"></script>
+</html>

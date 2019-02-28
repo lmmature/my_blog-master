@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <!-- META DATA -->
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="龙妙浩" content="1043213248@qq.com">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <!-- Owl Carousel Assets -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="/static/font-awesome-4.4.0/css/font-awesome.min.css" type="text/css">
+</head>
+<body class="{% block class %}{% endblock %}">
+{% block content %}
+{% endblock %}
+</body>
+<!-- jQuery -->
+<script type="text/javascript" src="/static/js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="/static/js/agency.js"></script>
+<!-- Plugin JavaScript -->
+<script src="/static/js/jquery.easing.min.js"></script>
+<script src="/static/js/classie.js"></script>
+<script src="/static/js/cbpAnimatedHeader.js"></script>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+</html>

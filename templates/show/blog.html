@@ -1,0 +1,68 @@
+{% extends "show/base.html" %}
+{% block title %}{{ get_type }}{% endblock %}
+{% block content %}
+    {% include "show/header.html" %}
+    <!-- /////////////////////////////////////////Content -->
+    <br><br><br><br>
+    <div id="page-content">
+        <div id="page-content">
+            <section class="box-content box-1">
+                <div class="container">
+                    <div class="row">
+                        {% if not result1 %}
+                            <div class="col-md-12">
+                                <div class="box-item">
+                                    <div class="content">
+                                        <h1 class="color-red text-center">空空如也</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                            {% for var in result1 %}
+                                <div class="box-item">
+                                    <img src="{{ var.url }}" class="img-responsive"/>
+                                    <div class="content">
+                                        <h3>{{ var.title|safe }}</h3>
+                                        <p>{{ var.description|safe }}.....</p>
+                                        <a href="{% url 'single_paper_show' var.id %}">Read More...</a>
+                                        <br><br>
+                                        <span>{{ var.time|safe }}</span><br>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-4">
+                            {% for var in result2 %}
+                                <div class="box-item">
+                                    <img src="{{ var.url }}" class="img-responsive"/>
+                                    <div class="content">
+                                        <h3>{{ var.title|safe }}</h3>
+                                        <p>{{ var.description|safe }}.....</p>
+                                        <a href="{% url 'single_paper_show' var.id %}">Read More...</a>
+                                        <br><br>
+                                        <span>{{ var.time|safe }}</span><br>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-4">
+                            {% for var in result3 %}
+                                <div class="box-item">
+                                    <img src="{{ var.url }}" class="img-responsive"/>
+                                    <div class="content">
+                                        <h3>{{ var.title|safe }}</h3>
+                                        <p>{{ var.description|safe }}.....</p>
+                                        <a href="{% url 'single_paper_show' var.id %}">Read More...</a>
+                                        <br><br>
+                                        <span>{{ var.time|safe }}</span><br>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "show/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <br/><br/><br/>
+
+    {% include "show/header.html" %}
+    <!-- /////////////////////////////////////////Content -->
+    <div id="page-content" class="single-page">
+    <div class="container">
+        <div class="row">
+            <div id="main-content">
+                <article>
+                    <img src=""/>
+                    <div class="art-content">
+                        <h1 align="center">{{ passage.title }}</h1>
+                        <div class="info" align="right">By <a href="#">龙妙浩</a>{{ passage.time }}</div>
+                        <div class="excerpt">
+                            {{ content|safe }}
+                        </div>
+                    </div>
+                </article>
+                {#					<div class="widget wid-related">#}
+                {#						<div class="heading"><h4>Related Post</h4></div>#}
+                {#						<div class="content">#}
+                {#							<div class="row">#}
+                {#								<div class="col-md-4">#}
+                {#									<div class="wrap-col">#}
+                {#										<a href="#"><img src="/static/images/7.jpg" /></a>#}
+                {#										<h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>#}
+                {#									</div>#}
+                {#								</div>#}
+                {#								<div class="col-md-4">#}
+                {#									<div class="wrap-col">#}
+                {#										<a href="#"><img src="/static/images/8.jpg" /></a>#}
+                {#										<h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>#}
+                {#									</div>#}
+                {#								</div>#}
+                {#								<div class="col-md-4">#}
+                {#									<div class="wrap-col">#}
+                {#										<a href="#"><img src="/static/images/6.jpg" /></a>#}
+                {#										<h4><a href="#">Vero eros et accumsan et iusto odio </a></h4>#}
+                {#									</div>#}
+                {#								</div>#}
+                {#							</div>#}
+                {#						</div>#}
+                {#					</div>#}
+                {#				</div>#}
+            </div>
+        </div>
+    </div>
+    {% include "show/footer.html" %}
+{% endblock %}
