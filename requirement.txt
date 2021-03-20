@@ -31,7 +31,7 @@ importlib==1.0.4
 incremental==17.5.0
 itsdangerous==1.1.0
 javascripthon==0.10
-Jinja2==2.10
+Jinja2==2.11.3
 jupyter-echarts-pypkg==0.1.2
 lml==0.0.2
 lxml==4.2.1
