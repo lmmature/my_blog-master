@@ -67,7 +67,7 @@ python-cas==1.4.0
 python-engineio==3.0.0
 python-socketio==2.1.2
 pytz==2018.3
-pywin32==223
+pywin32==301
 queuelib==1.5.0
 redis==3.0.1
 requests==2.18.4
