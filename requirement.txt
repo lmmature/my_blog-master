@@ -71,7 +71,7 @@ pywin32==223
 queuelib==1.5.0
 redis==3.0.1
 requests==2.18.4
-Scrapy==1.5.1
+Scrapy==2.6.1
 service-identity==18.1.0
 six==1.12.0
 sqlparse==0.2.4
